@@ -1,20 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react'
+import { Button, Text, TextInput, View } from 'react-native'
+import Svg from './Svg'
+import styles from './App.style'
 
-export default function App() {
+const App = () => {
+  const [url, setUrl] = useState('https://thenewcode.com/assets/images/thumbnails/homer-simpson.svg')
+  const [display, setDisplay] = useState(true)
+
+  const handleSetUrl = (text) => {
+    setUrl(text)
+    setDisplay(false)
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text>Please Enter SVG URL</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={(text) => handleSetUrl(text)}
+        value={url}
+        numberOfLines={3}
+        multiline
+      />
+      <Button
+        onPress={() => setDisplay(true)}
+        title="Render SVG"
+        color="#841584"
+        disabled={display}
+      />
+      {display && <Svg url={url} />}
     </View>
-  );
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
