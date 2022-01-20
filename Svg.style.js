@@ -1,25 +1,18 @@
 import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    marginTop: 50,
-    marginBottom: 30,
-    marginLeft: 20,
-    marginRight: 20,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  webImage: {
+    width: 500,
+    height: 500
   },
-  input: {
-    height: 120,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    width: '100%'
-  },
-  invalidURL: {
-    borderColor: 'red'
+  imageContainer: {
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    maxWidth: '100%',
+    maxHeight: '100%',
+    marginTop: 30,
+    marginBottom: 30
   }
 })
 

@@ -1,36 +1,54 @@
-import React, { useState } from 'react'
-import { Button, Text, TextInput, View } from 'react-native'
+import React, { Component } from 'react'
+import { Button, Keyboard, Text, TextInput, TouchableWithoutFeedback, SafeAreaView } from 'react-native'
 import Svg from './Svg'
 import styles from './App.style'
 
-const App = () => {
-  const [url, setUrl] = useState('https://thenewcode.com/assets/images/thumbnails/homer-simpson.svg')
-  const [display, setDisplay] = useState(true)
-
-  const handleSetUrl = (text) => {
-    setUrl(text)
-    setDisplay(false)
+export default class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      url: 'https://thenewcode.com/assets/images/thumbnails/homer-simpson.svg',
+      shouldDisplay: true
+    }
   }
 
-  return (
-    <View style={styles.container}>
-      <Text>Please Enter SVG URL</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => handleSetUrl(text)}
-        value={url}
-        numberOfLines={3}
-        multiline
-      />
-      <Button
-        onPress={() => setDisplay(true)}
-        title="Render SVG"
-        color="#841584"
-        disabled={display}
-      />
-      {display && <Svg url={url} />}
-    </View>
-  )
-}
+  handleSetUrl = (text) => {
+    this.setState({
+      url: text,
+      shouldDisplay: false
+    })
+  }
 
-export default App
+  handleSubmit = () => {
+    Keyboard.dismiss()
+    this.setState({
+      shouldDisplay: true
+    })
+  }
+
+  render () {
+    const { url, shouldDisplay } = this.state
+
+    return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <SafeAreaView style={styles.container}>
+          <Text>Enter SVG URL</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => this.handleSetUrl(text)}
+            value={url}
+            numberOfLines={3}
+            multiline
+          />
+          <Button
+            onPress={this.handleSubmit}
+            title="Render SVG"
+            style={styles.button}
+            disabled={shouldDisplay}
+          />
+          {shouldDisplay && <Svg url={url} />}
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    )
+  }
+}
